@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "structs.h"
+#include <iostream>
 
 //-----------------------------------------------------------------
 // Window Constructors
@@ -94,4 +95,46 @@ Ellipsef::Ellipsef( const Point2f& center, float radiusX, float radiusY )
 Ellipsef::Ellipsef( float centerX, float centerY, float radiusX, float radiusY )
 	: Ellipsef{ Point2f{ centerX, centerY }, radiusX, radiusY }
 {
+}
+
+
+//-----------------------------------------------------------------
+// Matrixf
+//-----------------------------------------------------------------
+
+Matrixf::Matrixf()
+	:data{}
+{
+
+}
+
+Matrixf::Matrixf(std::vector<std::vector<float>> data)
+	:data{ data }
+{
+
+}
+
+Matrixf Matrixf::Transpose() const
+{
+	std::vector<std::vector<float>> newData;
+	for (size_t i{ 0 }; i < data[0].size(); ++i)
+	{
+		newData.push_back({});
+		for (size_t j{ 0 }; j < data.size(); ++j)
+		{
+			newData[i].push_back(data[j][i]);
+		}
+	}
+	return Matrixf{ newData };
+}
+
+void Matrixf::Print() const
+{
+	for (const std::vector<float>& row : data) {
+		for (const float& value : row)
+		{
+			std::cout << value << " ";
+		}
+		std::cout << "\n";
+	}
 }
