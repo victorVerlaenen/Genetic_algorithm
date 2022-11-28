@@ -1,11 +1,31 @@
 #include "pch.h"
 #include "Game.h"
+#include "Layer.h"
+#include <iostream>
+#include <vector>
+#include <xtensor.hpp>
 
 //Basic game functions
 #pragma region gameFunctions											
 void Start()
 {
+	xt::xarray<float> testArr = { {2.f,3.f},{4.f,5.f} };
+
 	// initialize game resources here
+	Layer layer1(2, 4);
+	Layer layer2(4, 2);
+
+	Matrixf input{ std::vector<std::vector<float>>{
+		std::vector<float>{1.0f, 2.0f}
+	} };
+
+	layer1.Forward(input);
+	layer1.Output().Print();
+
+	std::cout << std::endl;
+
+	layer2.Forward(layer1.Output());
+	layer2.Output().Print();
 }
 
 void Draw()

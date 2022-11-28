@@ -33,6 +33,18 @@
     <ClCompile Include="utils.cpp">
       <Filter>Framework Files</Filter>
     </ClCompile>
+    <ClCompile Include="Individual.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NeuralNetwork.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Population.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -48,6 +60,18 @@
       <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Individual.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NeuralNetwork.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Population.h">
       <Filter>Project Files</Filter>
     </ClInclude>
   </ItemGroup>
