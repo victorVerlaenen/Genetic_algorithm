@@ -9,18 +9,23 @@
 #pragma region gameFunctions											
 void Start()
 {
+	xt::xarray<float> testArr = { {2.f,3.f},{4.f,5.f} };
+
 	// initialize game resources here
-	Layer layer1(4, 4);
+	Layer layer1(2, 4);
 	Layer layer2(4, 2);
 
-	xt::xarray<float> inputs = { 1, 2, 3, 4 };
+	Matrixf input{ std::vector<std::vector<float>>{
+		std::vector<float>{1.0f, 2.0f}
+	} };
 
-	/*layer1.Forward(inputs);
-	std::cout << layer1.Output() << std::endl;
+	layer1.Forward(input);
+	layer1.Output().Print();
 
+	std::cout << std::endl;
 
 	layer2.Forward(layer1.Output());
-	std::cout << layer2.Output() << std::endl;*/
+	layer2.Output().Print();
 }
 
 void Draw()

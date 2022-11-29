@@ -1,0 +1,8 @@
+Package: xtl
+Version: 0.7.2
+Depends: nlohmann-json
+Architecture: x64-windows
+Multi-Arch: same
+Abi: b68576066e835806854a1c45af7cbfaf21250c8a5f1cb722fd76775a690f9d85
+Description: The x template library
+Type: Port

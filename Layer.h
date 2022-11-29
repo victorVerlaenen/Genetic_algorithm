@@ -1,16 +1,15 @@
 #pragma once
-#include <xtensor.hpp>
 
 class Layer
 {
 public:
 	Layer(int numOfInputs, int numOfNeurons);
 
-	void Forward(const xt::xarray<float>& inputs);
-	xt::xarray<float> Output() const;
+	void Forward(const Matrixf& inputs);
+	Matrixf Output() const;
 private:
 
-	xt::xarray<float> m_Weights, m_Output;
-	xt::xarray<float> m_Biases;
+	Matrixf m_Weights, m_Outputs;
+	std::vector<float> m_Biases;
 };
 
