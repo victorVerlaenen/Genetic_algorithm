@@ -1,0 +1,8 @@
+Package: xtensor
+Version: 0.24.0
+Depends: nlohmann-json, vcpkg-cmake:x64-windows, vcpkg-cmake-config:x64-windows, xtl
+Architecture: x86-windows
+Multi-Arch: same
+Abi: ac27638a516e12324289083699fb4a141ce9932deb3b70a4a50651350ea5bc16
+Description: C++ tensors with broadcasting and lazy computing
+Type: Port
