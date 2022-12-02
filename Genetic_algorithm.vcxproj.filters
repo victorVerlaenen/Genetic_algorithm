@@ -74,5 +74,8 @@
     <ClInclude Include="Population.h">
       <Filter>Project Files</Filter>
     </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

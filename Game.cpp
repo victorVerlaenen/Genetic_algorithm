@@ -3,23 +3,23 @@
 #include "Layer.h"
 #include <iostream>
 #include <vector>
-#include <xtensor.hpp>
+//#include <xtensor.hpp>
 
 //Basic game functions
 #pragma region gameFunctions											
 void Start()
 {
-	// initialize game resources here
-	Layer layer1(4, 4);
-	Layer layer2(4, 2);
+	Layer<4, 5> layer1;
+	Layer<5, 2> layer2;
 
-	xt::xarray<float> input{ 1, 2, 3, 4 };
+	std::array<float, 4> input{ 1, 2, 3, 4 };
 
 	layer1.Forward(input);
-	std::cout << layer1.Output() << std::endl;
+	layer1.PrintOutput();
 
+	std::cout << std::endl;
 	layer2.Forward(layer1.Output());
-	std::cout << layer2.Output() << std::endl;
+	layer2.PrintOutput();
 }
 
 void Draw()
