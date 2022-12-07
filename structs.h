@@ -69,17 +69,3 @@ struct Ellipsef
 	float radiusX;
 	float radiusY;
 };
-
-
-
-struct Matrixf
-{
-public:
-	Matrixf();
-	Matrixf(std::vector<std::vector<float>> data);
-
-	Matrixf Transpose() const;
-	void Print() const;
-
-	std::vector<std::vector<float>> data;
-};

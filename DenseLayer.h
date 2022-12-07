@@ -1,12 +1,16 @@
 #pragma once
-#include <xtensor.hpp>
 #include "Defines.h"
+#include <algorithm>
+#include <random>
+#include <iostream>
+#include <array>
+//#include <xtensor.hpp>
 
 template<int INPUTS, int NEURONS>
-class Layer
+class DenseLayer
 {
 public:
-	Layer()
+	DenseLayer()
 	{
 		// Random
 		std::random_device rd;
@@ -41,6 +45,9 @@ public:
 			}
 			m_Output[i] += m_Biases[i];
 		}
+
+		// Rectified linear activation function
+		ActivationReLu();
 	}
 
 	std::array<float, NEURONS> Output() const
@@ -55,8 +62,21 @@ public:
 			std::cout << value << ", ";
 		}
 	}
+
+	~DenseLayer() = default;
+	DenseLayer(const DenseLayer& other) = delete;
+	DenseLayer(DenseLayer&& other) = delete;
+	DenseLayer& operator=(const DenseLayer& other) = delete;
+	DenseLayer& operator=(DenseLayer&& other) = delete;
 private:
 
+	void ActivationReLu()
+	{
+		for (float& outputValue : m_Output)
+		{
+			outputValue = std::max(0.0f, outputValue);
+		}
+	}
 	Matrix2D<NEURONS, INPUTS> m_Weights{};
 	std::array<float, NEURONS> m_Output{};
 	std::array<float, NEURONS> m_Biases{};

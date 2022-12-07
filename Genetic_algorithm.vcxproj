@@ -151,7 +151,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
-    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="DenseLayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NeuralNetwork.cpp" />
     <ClCompile Include="pch.cpp">
@@ -163,18 +163,20 @@
     <ClCompile Include="Population.cpp" />
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Individual.h" />
-    <ClInclude Include="Layer.h" />
+    <ClInclude Include="DenseLayer.h" />
     <ClInclude Include="NeuralNetwork.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Population.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="Vector2f.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

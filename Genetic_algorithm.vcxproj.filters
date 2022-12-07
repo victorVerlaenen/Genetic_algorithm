@@ -36,7 +36,7 @@
     <ClCompile Include="Individual.cpp">
       <Filter>Project Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layer.cpp">
+    <ClCompile Include="DenseLayer.cpp">
       <Filter>Project Files</Filter>
     </ClCompile>
     <ClCompile Include="NeuralNetwork.cpp">
@@ -44,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="Population.cpp">
       <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2f.cpp">
+      <Filter>Framework Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +68,7 @@
     <ClInclude Include="Individual.h">
       <Filter>Project Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layer.h">
+    <ClInclude Include="DenseLayer.h">
       <Filter>Project Files</Filter>
     </ClInclude>
     <ClInclude Include="NeuralNetwork.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Framework Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

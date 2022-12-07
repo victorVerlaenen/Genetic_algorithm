@@ -2,19 +2,45 @@
 #include "Population.h"
 #include "Individual.h"
 
-Population::Population(int populationSize)
+Population::Population(int populationSize, const Rectf& mapBounds)
+	:m_MapBounds{ mapBounds }
 {
-	m_pIndividuals.reserve(populationSize);
+	m_pIndividuals.resize(populationSize);
+	Initialize();
+}
+
+Population::~Population()
+{
+	for (int i{ 0 }; i < Size(); ++i)
+	{
+		delete m_pIndividuals[i];
+		m_pIndividuals[i] = nullptr;
+	}
 }
 
 void Population::Initialize()
 {
-	for (size_t i{ 0 }; i < Size(); ++i)
+	for (int i{ 0 }; i < m_pIndividuals.size(); ++i)
 	{
-		Individual* pIndividual = new Individual{};
-		pIndividual->Generate();
-		SaveIndividual(i, pIndividual);
+		m_pIndividuals[i] = new Individual{ Point2f{m_MapBounds.width / 2, m_MapBounds.height / 2}, m_MapBounds };
 	}
+	std::cout << "Current individual: " << indexOfCurrentEvaluatedIndividual << std::endl;
+}
+
+void Population::Update(float deltaTime)
+{
+	if (m_pIndividuals[indexOfCurrentEvaluatedIndividual]->IsDead() == true
+		&& indexOfCurrentEvaluatedIndividual < m_pIndividuals.size() - 1)
+	{
+		indexOfCurrentEvaluatedIndividual++;
+		std::cout << "Current individual: " << indexOfCurrentEvaluatedIndividual << std::endl;
+	}
+	m_pIndividuals[indexOfCurrentEvaluatedIndividual]->Update(deltaTime);
+}
+
+void Population::Draw() const
+{
+	m_pIndividuals[indexOfCurrentEvaluatedIndividual]->Draw();
 }
 
 Individual* Population::GetIndividual(size_t index) const
@@ -39,9 +65,4 @@ Individual* Population::GetFittestIndividual() const
 size_t Population::Size() const
 {
 	return m_pIndividuals.size();
-}
-
-void Population::SaveIndividual(size_t index, Individual* pIndividual)
-{
-	m_pIndividuals.at(index) = pIndividual;
 }
