@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "Population.h"
 #include "Individual.h"
+#include "Food.h"
+#include <iostream>
 
-Population::Population(int populationSize, const Rectf& mapBounds)
+Population::Population(int populationSize, const Rectf& mapBounds, Food* pFood)
 	:m_MapBounds{ mapBounds }
+	, m_pFood{ pFood }
 {
 	m_pIndividuals.resize(populationSize);
 	Initialize();
@@ -23,20 +26,44 @@ void Population::Initialize()
 	for (int i{ 0 }; i < m_pIndividuals.size(); ++i)
 	{
 		m_pIndividuals[i] = new Individual{ Point2f{m_MapBounds.width / 2, m_MapBounds.height / 2}, m_MapBounds };
+		m_pIndividuals[i]->SetFood(m_pFood);
 	}
 	std::cout << "Current individual: " << indexOfCurrentEvaluatedIndividual << std::endl;
 }
 
 void Population::Update(float deltaTime)
 {
-	if (m_pIndividuals[indexOfCurrentEvaluatedIndividual]->IsDead() == true
+	// Update the timer
+	m_CurrentTime += deltaTime;
+
+	// Go to next individual when current has died
+	if (m_pIndividuals[indexOfCurrentEvaluatedIndividual]->IsDead() == true)
+	{
+		m_pIndividuals[indexOfCurrentEvaluatedIndividual]->Reset();
+
+		// Reset food when individual restarts
+		m_pFood->Reset();
+	}
+
+	if (m_CurrentTime >= m_TimePerIndividual
 		&& indexOfCurrentEvaluatedIndividual < m_pIndividuals.size() - 1)
 	{
+		m_pIndividuals[indexOfCurrentEvaluatedIndividual]->CalculateFitness();
+
 		indexOfCurrentEvaluatedIndividual++;
 		std::cout << "Current individual: " << indexOfCurrentEvaluatedIndividual << std::endl;
+
+		// Reset food when individual starts
+		m_pFood->Reset();
+
+		// Reset the timer
+		m_CurrentTime = 0;
 	}
+
+	// Update current individual
 	m_pIndividuals[indexOfCurrentEvaluatedIndividual]->Update(deltaTime);
 }
+
 
 void Population::Draw() const
 {

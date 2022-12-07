@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "Game.h"
+#include "Food.h"
 
 Game::Game(const Window& window)
 	:m_Window{ window }
-	//, m_pIndividual{ new Individual{Point2f{window.width / 2, window.height / 2}, Rectf{0,0,window.width, window.height}} }
-	, m_Population{ 50,  Rectf{0,0,window.width, window.height} }
+	, m_pFood{ new Food{Point2f{0, 0},  Rectf{0,0,window.width, window.height}} }
+	, m_pPopulation{ nullptr }
 {
 	Initialize();
 }
@@ -16,19 +17,22 @@ Game::~Game()
 
 void Game::Initialize()
 {
-
+	m_pPopulation = new Population{ 50,  Rectf{0,0,m_Window.width, m_Window.height}, m_pFood };
 }
 
 void Game::Cleanup()
 {
-	//delete m_pIndividual;
-	//m_pIndividual = nullptr;
+	delete m_pPopulation;
+	m_pPopulation = nullptr;
+
+	delete m_pFood;
+	m_pFood = nullptr;
 }
 
 void Game::Update(float elapsedSec)
 {
-	//m_pIndividual->Update(elapsedSec);
-	m_Population.Update(elapsedSec);
+	m_pPopulation->Update(elapsedSec);
+	m_pFood->Update(elapsedSec);
 
 	// Check keyboard state
 	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
@@ -45,8 +49,9 @@ void Game::Update(float elapsedSec)
 void Game::Draw() const
 {
 	ClearBackground();
-	//m_pIndividual->Draw();
-	m_Population.Draw();
+
+	m_pPopulation->Draw();
+	m_pFood->Draw();
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
@@ -79,6 +84,10 @@ void Game::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 
 void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
+	if (e.button == SDL_BUTTON_LEFT)
+	{
+		m_pFood->SetPosition(Point2f{ static_cast<float>(e.x), static_cast<float>(m_Window.height - e.y) });
+	}
 	//std::cout << "MOUSEBUTTONDOWN event: ";
 	//switch ( e.button )
 	//{

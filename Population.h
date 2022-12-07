@@ -2,11 +2,11 @@
 #include <vector>
 
 class Individual;
-
+class Food;
 class Population
 {
 public:
-	Population(int populationSize, const Rectf& mapBounds);
+	Population(int populationSize, const Rectf& mapBounds, Food* pFood);
 	~Population();
 
 	Population(const Population& other) = delete;
@@ -26,5 +26,10 @@ private:
 	std::vector<Individual*> m_pIndividuals;
 	int indexOfCurrentEvaluatedIndividual{ 0 };
 	Rectf m_MapBounds;
+
+	float m_TimePerIndividual{ 20 };
+	float m_CurrentTime{ 0 };
+
+	Food* m_pFood;
 };
 

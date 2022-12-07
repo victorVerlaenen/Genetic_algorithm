@@ -48,6 +48,9 @@
     <ClCompile Include="Vector2f.cpp">
       <Filter>Framework Files</Filter>
     </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Vector2f.h">
       <Filter>Framework Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
+      <Filter>Project Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

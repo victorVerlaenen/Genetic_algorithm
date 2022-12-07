@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
 #include <array>
-#include "NeuralNetwork.h"
 
+class Food;
+class NeuralNetwork;
 class Individual
 {
 public:
@@ -17,16 +18,14 @@ public:
 	void Draw() const;
 	void Update(float deltaTime);
 
+	static void SetFood(Food* pFood);
+	void Reset();
+
 	Point2f GetPosition() const { return m_Position; }
 	bool IsDead() const;
 
+	void CalculateFitness();
 	int GetFitness() const;
-
-	template<typename Typename>
-	void SetBrain(Typename* pNetwork)
-	{
-		m_pBrain = pNetwork;
-	}
 
 private:
 	enum class MovementDirection
@@ -40,20 +39,28 @@ private:
 	void UpdateInputs();
 	void HandleMovement(float deltaTime);
 	void CheckIfInBounds();
+	void CheckIfFoodHasBeenEaten();
+	void CheckForEndlessMovement();
 
-
-	NeuralNetwork<10, 4, 20>* m_pBrain;
-	std::array<float, 10> m_Inputs;
+	NeuralNetwork* m_pBrain;
+	std::vector<float> m_Inputs;
+	float m_Fitness{ 0 };
 
 	Point2f m_Position;
-	float m_MoveSpeed{ 300.f };
+	Rectf m_Shape;
+	float m_MoveSpeed{ 800.f };
 	Vector2f m_Velocity{ 0.f, 0.f };
 	MovementDirection m_MovementDirection{ MovementDirection::Up };
 	bool m_IsDead{ false };
 
 	Rectf m_MapBounds;
+	static Food* m_pFood;
 
-	// Visuals
-	Rectf m_Shape;
+	float m_EndlessMovementTimer{ 0 };
+	float m_EndlessMovementValue{ 10 };
+
+	int m_AmountOfFoodsEaten{ 0 };
+	int m_AmountOfDeaths{ 0 };
+	int m_AmountOfEndlessMovement{ 0 };
 };
 

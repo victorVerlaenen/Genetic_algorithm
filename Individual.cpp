@@ -1,14 +1,23 @@
 #include "pch.h"
 #include "Individual.h"
+#include "NeuralNetwork.h"
+#include "Food.h"
+
+Food* Individual::m_pFood = nullptr;
+void Individual::SetFood(Food* pFood)
+{
+	m_pFood = pFood;
+}
+
 
 Individual::Individual(const Point2f& position, const Rectf& mapBounds, float width, float height)
-	:m_pBrain{ new NeuralNetwork<10, 4, 20>{2} }
+	:m_pBrain{ new NeuralNetwork{10, 4, 20, 2} }
 	, m_Shape{ position.x - width, position.y + height, width, height }
 	, m_Position{ position }
 	, m_MapBounds{ mapBounds }
 	, m_Inputs{}
 {
-
+	m_Inputs.resize(10);
 }
 
 Individual::~Individual()
@@ -25,9 +34,46 @@ void Individual::Draw() const
 
 void Individual::Update(float deltaTime)
 {
+	// Update timer
+	m_EndlessMovementTimer += deltaTime;
+
 	UpdateInputs();
 	HandleMovement(deltaTime);
 	CheckIfInBounds();
+	CheckIfFoodHasBeenEaten();
+	CheckForEndlessMovement();
+
+	// Update the shape to the position
+	m_Shape.left = m_Position.x - m_Shape.width/2;
+	m_Shape.bottom = m_Position.y - m_Shape.height/2;
+}
+
+void Individual::CheckForEndlessMovement()
+{
+	if (m_EndlessMovementTimer >= m_EndlessMovementValue)
+	{
+		m_AmountOfEndlessMovement++;
+		m_EndlessMovementTimer = 0;
+	}
+}
+
+void Individual::Reset()
+{
+	// Reset Position
+	m_Position.x = m_MapBounds.width / 2;
+	m_Position.y = m_MapBounds.height / 2;
+
+	// Bring back alive
+	m_IsDead = false;
+
+	// Reset the timer
+	m_EndlessMovementTimer = 0;
+}
+
+void Individual::CalculateFitness()
+{
+	m_Fitness += m_AmountOfFoodsEaten * 5000 - m_AmountOfDeaths * 150 - m_AmountOfEndlessMovement * 1000;
+	;
 }
 
 void Individual::HandleMovement(float deltaTime)
@@ -60,10 +106,6 @@ void Individual::HandleMovement(float deltaTime)
 
 	// Update the position
 	m_Position += m_Velocity * deltaTime;
-
-	// Update the shape to the position
-	m_Shape.left = m_Position.x;
-	m_Shape.bottom = m_Position.y;
 }
 
 void Individual::CheckIfInBounds()
@@ -72,6 +114,21 @@ void Individual::CheckIfInBounds()
 	if (utils::IsPointInRect(m_Position, m_MapBounds) == false)
 	{
 		m_IsDead = true;
+		m_AmountOfDeaths++;
+	}
+}
+
+void Individual::CheckIfFoodHasBeenEaten()
+{
+	if (m_pFood == nullptr)
+	{
+		return;
+	}
+	if (utils::IsOverlapping(m_Shape, m_pFood->GetShape()))
+	{
+		m_pFood->Reset();
+		m_AmountOfFoodsEaten++;
+		m_EndlessMovementTimer = 0;
 	}
 }
 

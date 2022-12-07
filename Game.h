@@ -26,8 +26,8 @@ public:
 private:
 	// DATA MEMBERS
 	const Window m_Window;
-	//Individual* m_pIndividual;
-	Population m_Population;
+	Population* m_pPopulation;
+	Food* m_pFood;
 
 	// FUNCTIONS
 	void Initialize( );
