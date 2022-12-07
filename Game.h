@@ -1,34 +1,36 @@
 #pragma once
-using namespace utils;
-#pragma region gameInformation
-// Set your name and group in the title here
-std::string g_WindowTitle{ "Project name - Name, firstname - 1DAExx" };
+#include "Individual.h"
+#include "NeuralNetwork.h"
+#include "Population.h"
 
-// Change the window dimensions here
-float g_WindowWidth{ 500 };
-float g_WindowHeight{ 300 };
-#pragma endregion gameInformation
+class Game final
+{
+public:
+	explicit Game( const Window& window );
+	Game(const Game& other) = delete;
+	Game& operator=(const Game& other) = delete;
+	Game( Game&& other) = delete;
+	Game& operator=(Game&& other) = delete;
+	~Game();
 
+	void Update( float elapsedSec );
+	void Draw( ) const;
 
+	// Event handling
+	void ProcessKeyDownEvent( const SDL_KeyboardEvent& e );
+	void ProcessKeyUpEvent( const SDL_KeyboardEvent& e );
+	void ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e );
+	void ProcessMouseDownEvent( const SDL_MouseButtonEvent& e );
+	void ProcessMouseUpEvent( const SDL_MouseButtonEvent& e );
 
-#pragma region ownDeclarations
-// Declare your own global variables here
+private:
+	// DATA MEMBERS
+	const Window m_Window;
+	//Individual* m_pIndividual;
+	Population m_Population;
 
-// Declare your own functions here
-
-#pragma endregion ownDeclarations
-
-#pragma region gameFunctions											
-void Start();
-void Draw();
-void Update(float elapsedSec);
-void End();
-#pragma endregion gameFunctions
-
-#pragma region inputHandling											
-void OnKeyDownEvent(SDL_Keycode key);
-void OnKeyUpEvent(SDL_Keycode key);
-void OnMouseMotionEvent(const SDL_MouseMotionEvent& e);
-void OnMouseDownEvent(const SDL_MouseButtonEvent& e);
-void OnMouseUpEvent(const SDL_MouseButtonEvent& e);
-#pragma endregion inputHandling
+	// FUNCTIONS
+	void Initialize( );
+	void Cleanup( );
+	void ClearBackground( ) const;
+};

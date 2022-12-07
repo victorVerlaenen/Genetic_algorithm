@@ -1,40 +1,36 @@
 #include "pch.h"
 #include "Game.h"
-#include "Layer.h"
-#include <iostream>
-#include <vector>
-//#include <xtensor.hpp>
 
-//Basic game functions
-#pragma region gameFunctions											
-void Start()
+Game::Game(const Window& window)
+	:m_Window{ window }
+	//, m_pIndividual{ new Individual{Point2f{window.width / 2, window.height / 2}, Rectf{0,0,window.width, window.height}} }
+	, m_Population{ 50,  Rectf{0,0,window.width, window.height} }
 {
-	Layer<4, 5> layer1;
-	Layer<5, 2> layer2;
-
-	std::array<float, 4> input{ 1, 2, 3, 4 };
-
-	layer1.Forward(input);
-	layer1.PrintOutput();
-
-	std::cout << std::endl;
-	layer2.Forward(layer1.Output());
-	layer2.PrintOutput();
+	Initialize();
 }
 
-void Draw()
+Game::~Game()
 {
-	ClearBackground();
+	Cleanup();
+}
 
-	// Put your own draw statements here
+void Game::Initialize()
+{
 
 }
 
-void Update(float elapsedSec)
+void Game::Cleanup()
 {
-	// process input, do physics 
+	//delete m_pIndividual;
+	//m_pIndividual = nullptr;
+}
 
-	// e.g. Check keyboard state
+void Game::Update(float elapsedSec)
+{
+	//m_pIndividual->Update(elapsedSec);
+	m_Population.Update(elapsedSec);
+
+	// Check keyboard state
 	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
 	//if ( pStates[SDL_SCANCODE_RIGHT] )
 	//{
@@ -46,28 +42,28 @@ void Update(float elapsedSec)
 	//}
 }
 
-void End()
+void Game::Draw() const
 {
-	// free game resources here
-}
-#pragma endregion gameFunctions
-
-//Keyboard and mouse input handling
-#pragma region inputHandling											
-void OnKeyDownEvent(SDL_Keycode key)
-{
-
+	ClearBackground();
+	//m_pIndividual->Draw();
+	m_Population.Draw();
 }
 
-void OnKeyUpEvent(SDL_Keycode key)
+void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-	//switch (key)
+	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;
+}
+
+void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
+{
+	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
+	//switch ( e.keysym.sym )
 	//{
 	//case SDLK_LEFT:
 	//	//std::cout << "Left arrow key released\n";
 	//	break;
 	//case SDLK_RIGHT:
-	//	//std::cout << "Right arrow key released\n";
+	//	//std::cout << "`Right arrow key released\n";
 	//	break;
 	//case SDLK_1:
 	//case SDLK_KP_1:
@@ -76,39 +72,47 @@ void OnKeyUpEvent(SDL_Keycode key)
 	//}
 }
 
-void OnMouseMotionEvent(const SDL_MouseMotionEvent& e)
+void Game::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 {
-	//std::cout << "  [" << e.x << ", " << e.y << "]\n";
-	//Point2f mousePos{ float( e.x ), float( g_WindowHeight - e.y ) };
+	//std::cout << "MOUSEMOTION event: " << e.x << ", " << e.y << std::endl;
 }
 
-void OnMouseDownEvent(const SDL_MouseButtonEvent& e)
+void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
-
-}
-
-void OnMouseUpEvent(const SDL_MouseButtonEvent& e)
-{
-	////std::cout << "  [" << e.x << ", " << e.y << "]\n";
-	//switch (e.button)
+	//std::cout << "MOUSEBUTTONDOWN event: ";
+	//switch ( e.button )
 	//{
 	//case SDL_BUTTON_LEFT:
-	//{
-	//	//std::cout << "Left mouse button released\n";
-	//	//Point2f mousePos{ float( e.x ), float( g_WindowHeight - e.y ) };
+	//	std::cout << " left button " << std::endl;
 	//	break;
-	//}
 	//case SDL_BUTTON_RIGHT:
-	//	//std::cout << "Right mouse button released\n";
+	//	std::cout << " right button " << std::endl;
 	//	break;
 	//case SDL_BUTTON_MIDDLE:
-	//	//std::cout << "Middle mouse button released\n";
+	//	std::cout << " middle button " << std::endl;
 	//	break;
 	//}
 }
-#pragma endregion inputHandling
 
-#pragma region ownDefinitions
-// Define your own functions here
+void Game::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)
+{
+	//std::cout << "MOUSEBUTTONUP event: ";
+	//switch ( e.button )
+	//{
+	//case SDL_BUTTON_LEFT:
+	//	std::cout << " left button " << std::endl;
+	//	break;
+	//case SDL_BUTTON_RIGHT:
+	//	std::cout << " right button " << std::endl;
+	//	break;
+	//case SDL_BUTTON_MIDDLE:
+	//	std::cout << " middle button " << std::endl;
+	//	break;
+	//}
+}
 
-#pragma endregion ownDefinitions
+void Game::ClearBackground() const
+{
+	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
