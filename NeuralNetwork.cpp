@@ -5,7 +5,7 @@ NeuralNetwork::NeuralNetwork(unsigned int numberOfInputs, unsigned int numberOfO
 	:m_pSingleHiddenLayer{ nullptr }
 	, m_pFirstHiddenLayer{ nullptr }
 	, m_pLastHiddenLayer{ nullptr }
-	, m_pOtherHiddenLayers{}
+	, m_pHiddenLayers{}
 	, m_NumberOfInputs{ numberOfInputs }
 	, m_NumberOfOutputs{ numberOfOutputs }
 	, m_NumberOfNeuronsPerHiddenLayer{ numberOfNeuronsPerHiddenLayer }
@@ -19,7 +19,7 @@ NeuralNetwork::NeuralNetwork(unsigned int numberOfInputs, unsigned int numberOfO
 	default:
 		for (size_t i{ 0 }; i < numOfHiddenLayers; ++i)
 		{
-			m_pOtherHiddenLayers.push_back(new DenseLayer{ numberOfNeuronsPerHiddenLayer, numberOfNeuronsPerHiddenLayer });
+			m_pHiddenLayers.push_back(new DenseLayer{ numberOfNeuronsPerHiddenLayer, numberOfNeuronsPerHiddenLayer });
 		}
 	case 2:
 		m_pFirstHiddenLayer = new DenseLayer{ numberOfInputs, numberOfNeuronsPerHiddenLayer };
@@ -39,10 +39,10 @@ NeuralNetwork::~NeuralNetwork()
 	delete m_pSingleHiddenLayer;
 	m_pSingleHiddenLayer = nullptr;
 
-	for (int i{ 0 }; i < m_pOtherHiddenLayers.size(); ++i)
+	for (int i{ 0 }; i < m_pHiddenLayers.size(); ++i)
 	{
-		delete m_pOtherHiddenLayers[i];
-		m_pOtherHiddenLayers[i] = nullptr;
+		delete m_pHiddenLayers[i];
+		m_pHiddenLayers[i] = nullptr;
 	}
 }
 
@@ -58,7 +58,7 @@ void NeuralNetwork::Forward(const std::vector<float>& inputs)
 
 	m_pFirstHiddenLayer->Forward(inputs);
 	auto nextInputForLayer = m_pFirstHiddenLayer->Output();
-	for (auto& pLayer : m_pOtherHiddenLayers)
+	for (auto& pLayer : m_pHiddenLayers)
 	{
 		pLayer->Forward(nextInputForLayer);
 		nextInputForLayer = pLayer->Output();

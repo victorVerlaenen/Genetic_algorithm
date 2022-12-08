@@ -14,14 +14,17 @@ public:
 	Population& operator=(const Population& other) = delete;
 	Population& operator=(Population&& other) = delete;
 
+	void Initialize();
 	void Update(float deltaTime);
 	void Draw() const;
 
 	Individual* GetIndividual(size_t index) const;
 	Individual* GetFittestIndividual() const;
+	void SetNewIndividuals(const std::vector<Individual*>& newIndividuals);
 	size_t Size() const;
+
+	bool IsDone() const;
 private:
-	void Initialize();
 
 	std::vector<Individual*> m_pIndividuals;
 	int indexOfCurrentEvaluatedIndividual{ 0 };

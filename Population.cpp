@@ -9,7 +9,7 @@ Population::Population(int populationSize, const Rectf& mapBounds, Food* pFood)
 	, m_pFood{ pFood }
 {
 	m_pIndividuals.resize(populationSize);
-	Initialize();
+	Individual::SetFood(m_pFood);
 }
 
 Population::~Population()
@@ -29,6 +29,20 @@ void Population::Initialize()
 		m_pIndividuals[i]->SetFood(m_pFood);
 	}
 	std::cout << "Current individual: " << indexOfCurrentEvaluatedIndividual << std::endl;
+}
+
+void Population::SetNewIndividuals(const std::vector<Individual*>& newIndividuals)
+{
+	for (int i{ 0 }; i < Size(); ++i)
+	{
+		delete m_pIndividuals[i];
+		m_pIndividuals[i] = newIndividuals[i];
+	}
+
+	// Reset needed values
+	m_CurrentTime = 0;
+	m_pFood->Reset();
+	indexOfCurrentEvaluatedIndividual = 0;
 }
 
 void Population::Update(float deltaTime)
@@ -64,6 +78,14 @@ void Population::Update(float deltaTime)
 	m_pIndividuals[indexOfCurrentEvaluatedIndividual]->Update(deltaTime);
 }
 
+bool Population::IsDone() const
+{
+	if (indexOfCurrentEvaluatedIndividual >= m_pIndividuals.size())
+	{
+		return true;
+	}
+	return false;
+}
 
 void Population::Draw() const
 {

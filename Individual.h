@@ -22,6 +22,7 @@ public:
 	void Reset();
 
 	Point2f GetPosition() const { return m_Position; }
+	NeuralNetwork* GetBrain() const { return m_pBrain; }
 	bool IsDead() const;
 
 	void CalculateFitness();

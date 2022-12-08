@@ -25,7 +25,7 @@ private:
 	DenseLayer* m_pSingleHiddenLayer;
 
 	//Only used when there are 3 or more hidden layers
-	std::vector<DenseLayer*> m_pOtherHiddenLayers;
+	std::vector<DenseLayer*> m_pHiddenLayers;
 
 	std::vector<float> m_Output{};
 

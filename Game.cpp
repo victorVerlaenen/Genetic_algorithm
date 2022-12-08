@@ -17,7 +17,8 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_pPopulation = new Population{ 50,  Rectf{0,0,m_Window.width, m_Window.height}, m_pFood };
+	m_pPopulation = new Population{ 10,  Rectf{0,0,m_Window.width, m_Window.height}, m_pFood };
+	m_pPopulation->Initialize();
 }
 
 void Game::Cleanup()

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Food.h"
+#include <iostream>
 
 Food::Food(const Point2f& position, const Rectf& mapBounds, float width, float height)
 	:m_Position{ position }

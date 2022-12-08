@@ -157,8 +157,8 @@ void Individual::UpdateInputs()
 	}
 
 	// x and y position of the food (FOR NOW JUST POSITION (0, 0))
-	m_Inputs[4] = m_Position.x / m_MapBounds.width;
-	m_Inputs[5] = m_Position.y / m_MapBounds.height;
+	m_Inputs[4] = m_pFood->GetShape().left / m_MapBounds.width;
+	m_Inputs[5] = m_pFood->GetShape().bottom / m_MapBounds.height;
 
 	// distance to all 4 walls
 	m_Inputs[6] = m_Position.x / m_MapBounds.width;
@@ -166,7 +166,7 @@ void Individual::UpdateInputs()
 	m_Inputs[8] = m_Position.y / m_MapBounds.height;
 	m_Inputs[9] = (m_MapBounds.height - m_Position.y) / m_MapBounds.height;
 
-	/*std::cout << "Inputs: [";
+	/*std::cout << "inputs: [";
 	for (int i{ 0 }; i < m_Inputs.size() - 1; ++i)
 	{
 		std::cout << m_Inputs[i] << ", ";

@@ -51,6 +51,9 @@
     <ClCompile Include="Food.cpp">
       <Filter>Project Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneticAlgorithm.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -87,6 +90,9 @@
       <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Food.h">
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneticAlgorithm.h">
       <Filter>Project Files</Filter>
     </ClInclude>
   </ItemGroup>
